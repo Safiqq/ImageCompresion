@@ -18,7 +18,7 @@ def dequantize(matrix) :
             [72, 92, 95, 98, 112, 100, 103, 99],
         ]
     )
-    return (matrix * quantization_matrix).astype(int)
+    return matrix * quantization_matrix
 
 def idct_transform(matrix):
     idct = []
@@ -65,15 +65,16 @@ print("Tabel warna setelah ditambah 128:")
 print(tabulate(restored_image, tablefmt="psql"))
 print()
 
-resized_image = cv2.resize(
+resized_restored_image = cv2.resize(
     restored_image, (8, 8), interpolation=cv2.INTER_LINEAR
 )
 
-cv2.destroyAllWindows()
+cv2.imwrite(f"{os.getcwd()}\\results\{encode.image_name}\decompressed.jpg", resized_restored_image)
+
 cv2.namedWindow("Restored Image", cv2.WINDOW_NORMAL)
 cv2.resizeWindow("Restored Image", 480, 480)
-cv2.imshow("Restored Image", resized_image)
-cv2.imwrite(f"{os.getcwd()}\\results\{encode.image_name}\decompresed.jpg", resized_image)
+decompressed_image = cv2.imread(f"results/{encode.image_name}/decompressed.jpg")
+cv2.imshow("Restored Image", decompressed_image)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
